@@ -4,4 +4,6 @@ Description: "this template creates S3 bucket with random name"
 Resources:
   MyBucket:
     Type: AWS::S3::Bucket
+  EcBrands:
+    Type: AWS::S3::Bucket  
   
