@@ -27,3 +27,58 @@ Parameters:
   PrivateSubnet2CIDR:
     Type: String
     Default: "192.168.3.0/24"
+Resources:
+  VPC: 
+    Type: "AWS::EC2::VPC"
+    Properties: 
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsSupport: "true"
+      EnableDnsHostnames: "true"
+      InstanceTenancy: default
+      Tags: 
+        - Key: Name
+          Value: !Ref 'AWS::StackId'
+  PublicSubnet1: 
+    Type: "AWS::EC2::Subnet"
+    Properties: 
+      VpcId: !Ref VPC 
+      CidrBlock: !Ref PublicSubnet1CIDR
+      AvailabilityZone: !Select 
+        - 0
+        - Fn::GetAZs: !Ref 'AWS::Region'
+      Tags: 
+        - Key: Name
+          Value: !Ref 'AWS::StackId'
+  PublicSubnet2: 
+    Type: "AWS::EC2::Subnet"
+    Properties: 
+      VpcId: !Ref VPC 
+      CidrBlock: !Ref PublicSubnet2CIDR
+      AvailabilityZone: !Select 
+        - 1
+        - Fn::GetAZs: !Ref 'AWS::Region'
+      Tags: 
+        - Key: Name
+          Value: !Ref 'AWS::StackId'
+  PrivateSubnet1: 
+    Type: "AWS::EC2::Subnet"
+    Properties: 
+      VpcId: !Ref VPC 
+      CidrBlock: !Ref PrivateSubnet1CIDR
+      AvailabilityZone: !Select 
+        - 0
+        - Fn::GetAZs: !Ref 'AWS::Region'
+      Tags: 
+        - Key: Name
+          Value: !Ref 'AWS::StackId'
+  PrivateSubnet2: 
+    Type: "AWS::EC2::Subnet"
+    Properties: 
+      VpcId: !Ref VPC 
+      CidrBlock: !Ref PrivateSubnet2CIDR
+      AvailabilityZone: !Select 
+        - 1
+        - Fn::GetAZs: !Ref 'AWS::Region'
+      Tags: 
+        - Key: Name
+          Value: !Ref 'AWS::StackId'
