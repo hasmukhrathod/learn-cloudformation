@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  AWS CloudFormation Template: Sample
+  template showing how to create a VPC with two public subnets & two private subnets.
+  Class A IP addresses are used for huge networks, like those deployed by Internet Service Providers (ISPs). Class A IP addresses support up to 16 million hosts (hosts are devices that connect to a network (computers, servers, switches, routers, printers…etc.) and a Class A network can be divided into 128 different networks. 
+  Class B IP addresses are used for medium and large-sized networks in enterprises and organizations. They support up to 65,000 hosts on 16,000 individual networks. 
+  Class C addresses are most common and used in small business and home networks. These support up to 256 hosts on each of 2 million networks. 
+  Class C Private Range: 192.168.0.0 to 192.168.255.255
+  The allowed block size is between a /16 netmask (65,536 IP addresses) and /28 netmask (16 IP addresses). 
+Parameters:
+  VpcCIDR:
+    Type: String
+    Default: "192.168.0.0/22"
+
+  PublicSubnet1CIDR:
+    Type: String
+    Default: "192.168.0.0/24"
+
+  PublicSubnet2CIDR:
+    Type: String
+    Default: "192.168.1.0/24"
+
+  PrivateSubnet1CIDR:
+    Type: String
+    Default: "192.168.2.0/24"
+
+  PrivateSubnet2CIDR:
+    Type: String
+    Default: "192.168.3.0/24"
