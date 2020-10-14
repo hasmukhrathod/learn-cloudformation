@@ -281,6 +281,7 @@ Resources:
   WebServer:
     Type: "AWS::EC2::Instance"
     Properties:
+      VpcId: !Ref VPC
       InstanceType: !Ref ValidInstanceType
       ImageId:
         Fn::FindInMap:
