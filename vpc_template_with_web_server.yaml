@@ -292,11 +292,6 @@ Resources:
         - Fn::GetAZs: !Ref 'AWS::Region'  
       SecurityGroups:
         - !Ref WebServerSecurityGroup
-      NetworkInterfaces: 
-        - AssociatePublicIpAddress: "true"
-          SubnetId: !Ref PublicSubnet1
-          DeviceIndex: "0"
-          DeleteOnTermination: "true"
       Tags: 
         - Key: Name
           Value: !Sub "${ProjectEnvPrefix}-web-server"
