@@ -115,9 +115,6 @@ Mappings:
     #Oregon  
     us-west-2:
       AMI: ami-0b1e2eeb33ce3d66f
-    #Hongkong  
-    ap-east-1:
-      AMI: 
     #Mumbai  
     ap-south-1:
       AMI: ami-0732b62d310b80e97
@@ -127,9 +124,6 @@ Mappings:
     #Seol  
     ap-northeast-2:
       AMI: ami-0e92198843e11ccee
-    #Osaka
-    ap-northeast-3:
-      AMI: 
     #Singapore  
     ap-southeast-1:
       AMI: ami-0adbe59da7d24a349
