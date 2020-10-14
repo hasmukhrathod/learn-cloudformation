@@ -303,6 +303,7 @@ Resources:
   WebServerSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
+      VpcId: !Ref VPC
       GroupDescription: "Enable SSH via port 22"
       SecurityGroupIngress:
         - IpProtocol: tcp
