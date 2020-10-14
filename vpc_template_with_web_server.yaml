@@ -6,7 +6,48 @@ Description: >-
   Class B IP addresses are used for medium and large-sized networks in enterprises and organizations. They support up to 65,000 hosts on 16,000 individual networks. 
   Class C addresses are most common and used in small business and home networks. These support up to 256 hosts on each of 2 million networks. 
   Class C Private Range: 192.168.0.0 to 192.168.255.255
-  The allowed block size is between a /16 netmask (65,536 IP addresses) and /28 netmask (16 IP addresses). 
+  The allowed block size is between a /16 netmask (65,536 IP addresses) and /28 netmask (16 IP addresses).
+Metadata:
+  AWS::CloudFormation::Interface: 
+    ParameterGroups: 
+      - 
+        Label: 
+          default: "Project Name with its Environment: EC-Staging"
+        Parameters: 
+          - ProjectEnvPrefix
+      - 
+        Label: 
+          default: "Network Configuration"
+        Parameters: 
+          - VpcCIDR
+          - PublicSubnet1CIDR
+          - PublicSubnet2CIDR
+          - PrivateSubnet1CIDR
+          - PrivateSubnet2CIDR
+      - 
+        Label: 
+          default: "Amazon EC2 Configuration"
+        Parameters: 
+          - ValidInstanceType
+          - KeyName
+          - SSHLocation
+    ParameterLabels: 
+      VpcCIDR: 
+        default: "Enter VPC CIDR Range."
+      PublicSubnet1CIDR:
+        default: "What should be the range of Publice Subnet-1"
+      PublicSubnet2CIDR:
+        default: "What should be the range of Publice Subnet-2"
+      PrivateSubnet1CIDR:
+        default: "What should be the range of Private Subnet-1"    
+      PrivateSubnet2CIDR:
+        default: "What should be the range of Private Subnet-2"
+      ValidInstanceType:
+        default: "Choose Instance Type"
+      KeyName:
+        default: "Choose KeyPair. It will be useful while doing SSH."   
+      SSHLocation:
+        default: "Restrict SSH Location by specifying office IP or Home IP."          
 Parameters:
   ##For Tagging
   ProjectEnvPrefix:
