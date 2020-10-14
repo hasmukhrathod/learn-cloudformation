@@ -8,6 +8,8 @@ Description: >-
   Class C Private Range: 192.168.0.0 to 192.168.255.255
   The allowed block size is between a /16 netmask (65,536 IP addresses) and /28 netmask (16 IP addresses). 
 Parameters:
+  ProjectEnvPrefix:
+    Type: String
   VpcCIDR:
     Type: String
     Default: "192.168.0.0/22"
@@ -37,7 +39,7 @@ Resources:
       InstanceTenancy: default
       Tags: 
         - Key: Name
-          Value: !Ref 'AWS::StackId'
+          Value: !Sub "${ProjectEnvPrefix}-vpc"
   PublicSubnet1: 
     Type: "AWS::EC2::Subnet"
     Properties: 
@@ -48,7 +50,7 @@ Resources:
         - Fn::GetAZs: !Ref 'AWS::Region'
       Tags: 
         - Key: Name
-          Value: !Ref 'AWS::StackId'
+          Value: !Sub "${ProjectEnvPrefix}-PublicSubnet1"
   PublicSubnet2: 
     Type: "AWS::EC2::Subnet"
     Properties: 
@@ -59,7 +61,7 @@ Resources:
         - Fn::GetAZs: !Ref 'AWS::Region'
       Tags: 
         - Key: Name
-          Value: !Ref 'AWS::StackId'
+          Value: !Sub "${ProjectEnvPrefix}-PublicSubnet2"
   PrivateSubnet1: 
     Type: "AWS::EC2::Subnet"
     Properties: 
@@ -70,7 +72,7 @@ Resources:
         - Fn::GetAZs: !Ref 'AWS::Region'
       Tags: 
         - Key: Name
-          Value: !Ref 'AWS::StackId'
+          Value: !Sub "${ProjectEnvPrefix}-PrivateSubnet1"
   PrivateSubnet2: 
     Type: "AWS::EC2::Subnet"
     Properties: 
@@ -81,13 +83,13 @@ Resources:
         - Fn::GetAZs: !Ref 'AWS::Region'
       Tags: 
         - Key: Name
-          Value: !Ref 'AWS::StackId'
+          Value: !Sub "${ProjectEnvPrefix}-PrivateSubnet2"
   InternetGateway:
     Type: 'AWS::EC2::InternetGateway'
     Properties:
-      Tags:
-        - Key: Application
-          Value: !Ref 'AWS::StackId'
+      Tags: 
+        - Key: Name
+          Value: !Sub "${ProjectEnvPrefix}-igw"
   AttachGateway:
     Type: 'AWS::EC2::VPCGatewayAttachment'
     Properties:
@@ -97,9 +99,9 @@ Resources:
     Type: 'AWS::EC2::RouteTable'
     Properties:
       VpcId: !Ref VPC
-      Tags:
-        - Key: Application
-          Value: !Ref 'AWS::StackId'
+      Tags: 
+        - Key: Name
+          Value: !Sub "${ProjectEnvPrefix}-PublicRouteTable"
   PublicRoute:
     Type: 'AWS::EC2::Route'
     DependsOn: AttachGateway
@@ -121,9 +123,9 @@ Resources:
     Type: 'AWS::EC2::RouteTable'
     Properties:
       VpcId: !Ref VPC
-      Tags:
-        - Key: Application
-          Value: !Ref 'AWS::StackId'
+      Tags: 
+        - Key: Name
+          Value: !Sub "${ProjectEnvPrefix}-PrivateRouteTable"
   PrivateSubnet1ARouteTableAssociation: 
     Type: "AWS::EC2::SubnetRouteTableAssociation"
     Properties: 
