@@ -280,6 +280,7 @@ Resources:
       RouteTableId: !Ref PrivateRouteTable
   WebServer:
     Type: "AWS::EC2::Instance"
+    DependsOn: AttachGateway
     Properties:
       InstanceType: !Ref ValidInstanceType
       ImageId:
@@ -290,8 +291,13 @@ Resources:
       AvailabilityZone: !Select 
         - 0
         - Fn::GetAZs: !Ref 'AWS::Region'  
-      SecurityGroups:
-        - !Ref WebServerSecurityGroup
+      NetworkInterfaces:
+        - GroupSet:
+            - !Ref WebServerSecurityGroup
+          AssociatePublicIpAddress: 'true'
+          DeviceIndex: '0'
+          DeleteOnTermination: 'true'
+          SubnetId: !Ref PublicSubnet1
       Tags: 
         - Key: Name
           Value: !Sub "${ProjectEnvPrefix}-web-server"
