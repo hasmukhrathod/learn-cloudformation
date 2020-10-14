@@ -295,6 +295,10 @@ Resources:
       NetworkInterfaces: 
         - AssociatePublicIpAddress: "true"
           SubnetId: !Ref PublicSubnet1
+          DeviceIndex: "0"
+          DeleteOnTermination: "true"
+          GroupSet:
+            - !Ref WebServerSecurityGroup
       Tags: 
         - Key: Name
           Value: !Sub "${ProjectEnvPrefix}-web-server"
