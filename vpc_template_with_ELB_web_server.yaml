@@ -350,7 +350,16 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
-  
+  ALBSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      VpcId: !Ref VPC
+      GroupDescription: "Allow traffic on port 80"
+      SecurityGroupIngress:
+        - IpProtocol: HTTP
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
 Outputs:
   URL:
     Value: !Join 
