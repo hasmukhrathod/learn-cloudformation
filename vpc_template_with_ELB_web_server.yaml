@@ -360,12 +360,50 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
+  
+  AppLoadBalancer:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      Scheme: internet-facing
+      SecurityGroups:
+        - !Ref ALBSecurityGroup
+      Subnets:
+        - PublicSubnet1
+        - PublicSubnet2
+      Instances:
+        - !Ref WebServer1
+        - !Ref WebServer2
+      Listeners:
+        - LoadBalancerPort: "80"
+          InstancePort: "80"
+          Protocol: HTTP
+          InstanceProtocol: HTTP
+  ALBListener:
+    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref ALBTargetGroup
+      LoadBalancerArn: !Ref AppLoadBalancer
+      Port: '80'
+      Protocol: HTTP
+  ALBTargetGroup:
+    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Properties:
+      HealthCheckIntervalSeconds: 10
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      Port: 80
+      Protocol: HTTP
+      UnhealthyThresholdCount: 5
+      VpcId: !Ref VPC
+      
 Outputs:
   URL:
     Value: !Join 
       - ''
       - - 'http://'
         - !GetAtt 
-          - WebServer
-          - PublicIp
-    Description: Newly created application URL
+          - AppLoadBalancer
+          - DNSName
+    Description: Newly created ALB URL
