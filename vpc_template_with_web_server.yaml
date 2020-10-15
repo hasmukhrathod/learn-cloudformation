@@ -298,6 +298,15 @@ Resources:
           DeviceIndex: '0'
           DeleteOnTermination: 'true'
           SubnetId: !Ref PublicSubnet1
+      BlockDeviceMappings:
+        - DeviceName: "/dev/sda1"
+          Ebs:
+            DeleteOnTermination: "true"
+            VolumeSize: "20"
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          sudo yum update -y
       Tags: 
         - Key: Name
           Value: !Sub "${ProjectEnvPrefix}-web-server"
